@@ -1,3 +1,5 @@
+import Account from "../../domain/models/Account";
+
 export default class UpdateAccountConsignar {
   constructor(accountRepository) {
     this.accountRepository = accountRepository;
@@ -7,8 +9,8 @@ export default class UpdateAccountConsignar {
   }
 }
 
-if (UpdateAccount > 0) {
-    console.log ("La consigna fue hecha con exito")
+if (UpdateAccountConsignar) {
+    Account.saldo += accountData.saldo;
 }else {
     console.log ("La consigna no se pudo realizar")
 }
