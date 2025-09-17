@@ -1,16 +1,24 @@
+import AccountModel from "../../domain/models/Account.js";
 
-import mongoose from "mongoose";
+export default class AccountRepositoryMongo {
+  async create(accountData) {
+    const account = new AccountModel(accountData);
+    return await account.save();
+  }
 
+  async findAll() {
+    return await AccountModel.find();
+  }
 
+  async findById(id) {
+    return await AccountModel.findById(id);
+  }
 
-const AccountModel = mongoose.model("Account", AccountSchema);
+  async update(id, accountData) {
+    return await AccountModel.findByIdAndUpdate(id, accountData, { new: true });
+  }
 
-class AccountRepositoryMongo {
-  async create(data) { return await new AccountModel(data).save(); }
-  async findAll() { return await AccountModel.find(); }
-  async findById(id) { return await AccountModel.findById(id); }
-  async update(id, data) { return await AccountModel.findByIdAndUpdate(id, data, { new: true }); }
-  async delete(id) { return await AccountModel.findByIdAndDelete(id); }
+  async delete(id) {
+    return await AccountModel.findByIdAndDelete(id);
+  }
 }
-
-export default AccountRepositoryMongo;

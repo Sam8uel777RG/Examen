@@ -2,9 +2,10 @@ import CreateAccount from "../../application/use_cases/CreateAccount.js";
 import DeleteAccount from "../../application/use_cases/DeleteAccount.js";
 import GetAccount from "../../application/use_cases/GetAccount.js";
 import GetAccountById from "../../application/use_cases/GetAccountById.js";
-import UpdateAccountConsignar from "../../application/use_cases/UpdateAccountConsignar.js";
-import UpdateAccountRetirar from "../../application/use_cases/UpdateAccountRetirar.js";
+import UpdateAccountConsignarUseCase from "../../application/use_cases/UpdateAccountConsignar.js";
+import UpdateAccountRetirarUseCase from "../../application/use_cases/UpdateAccountRetirar.js";
 
+import AccountRepositoryMongo from "../repositories/AccountRepositoryMongo.js";
 const accountRepository = new AccountRepositoryMongo();
 
 export const createAccount = async (req, res) => {
@@ -37,10 +38,9 @@ export const getAccountById = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
-export const UpdateAccountConsignar = async (req, res) => {
+export const updateAccountConsignar = async (req, res) => {
   try {
-    const useCase = new UpdateAccountConsignar(accountRepository);
+    const useCase = new UpdateAccountConsignarUseCase(accountRepository);
     const account = await useCase.execute(req.params.id, req.body);
     if (!account) return res.status(404).json({ message: "Account not found" });
     res.json(account);
@@ -51,7 +51,7 @@ export const UpdateAccountConsignar = async (req, res) => {
 
 export const updateAccountRetirar = async (req, res) => {
   try {
-    const useCase = new UpdateAccountRetirar(accountRepository);
+    const useCase = new UpdateAccountRetirarUseCase(accountRepository);
     const account = await useCase.execute(req.params.id, req.body);
     if (!account) return res.status(404).json({ message: "Account not found" });
     res.json(account);
